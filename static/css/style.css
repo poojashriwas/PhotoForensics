@@ -1,0 +1,25 @@
+body{
+    background:#0f172a;
+    color:white;
+}
+
+.navbar{
+    box-shadow:0 0 15px cyan;
+}
+
+h1{
+    color:#38bdf8;
+}
+
+.lead{
+    color:#cbd5e1;
+}
+
+.form-control{
+    max-width:500px;
+    margin:auto;
+}
+
+.btn{
+    width:220px;
+}
