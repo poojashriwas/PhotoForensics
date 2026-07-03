@@ -223,11 +223,65 @@ Not Available
 
 <div class="card-body">
 
-<p class="text-muted">
+<table class="table table-striped">
 
-Coming in Phase 4
+<tbody>
 
-</p>
+{% for key, value in gps_info.items() %}
+
+<tr>
+
+<th>{{ key }}</th>
+
+<td>
+
+{% if key == "Status" %}
+
+    {% if value == "GPS Coordinates Found" %}
+
+        <span class="text-success fw-bold">
+            {{ value }}
+        </span>
+
+    {% else %}
+
+        <span class="text-danger fw-bold">
+            {{ value }}
+        </span>
+
+    {% endif %}
+
+{% else %}
+
+    {{ value }}
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% if google_maps_url %}
+
+<div class="text-center mt-3">
+
+<a href="{{ google_maps_url }}"
+   target="_blank"
+   class="btn btn-success">
+
+🌍 Open in Google Maps
+
+</a>
+
+</div>
+
+{% endif %}
 
 </div>
 
