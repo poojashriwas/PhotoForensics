@@ -1,25 +1,55 @@
 body{
-    background:#0f172a;
-    color:white;
+
+background:#0f172a;
+
+font-family:Segoe UI;
+
+color:white;
+
 }
 
-.navbar{
-    box-shadow:0 0 15px cyan;
+.card{
+
+border:none;
+
+border-radius:15px;
+
 }
 
-h1{
-    color:#38bdf8;
+.card-header{
+
+font-size:20px;
+
+font-weight:bold;
+
 }
 
-.lead{
-    color:#cbd5e1;
+.table{
+
+margin-bottom:0;
+
 }
 
-.form-control{
-    max-width:500px;
-    margin:auto;
+.table th{
+
+width:40%;
+
+}
+
+img{
+
+border-radius:15px;
+
+box-shadow:0 0 20px rgba(0,0,0,.3);
+
 }
 
 .btn{
-    width:220px;
+
+padding:12px 40px;
+
+font-size:18px;
+
+border-radius:12px;
+
 }
