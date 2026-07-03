@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import os
-
+from modules.hashing import calculate_hashes
 from modules.fileinfo import get_file_info
 from modules.metadata import extract_metadata
 
@@ -34,13 +34,14 @@ def upload():
 
     # Extract Metadata
     metadata = extract_metadata(filepath)
-
+    hash_info = calculate_hashes(filepath)
     return render_template(
-        "result.html",
-        filename=image.filename,
-        file_info=file_info,
-        metadata=metadata
-    )
+    "result.html",
+    filename=image.filename,
+    file_info=file_info,
+    metadata=metadata,
+    hash_info=hash_info
+)
 
 
 if __name__ == "__main__":
