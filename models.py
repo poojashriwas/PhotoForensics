@@ -1,0 +1,66 @@
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
+
+db = SQLAlchemy()
+
+class User(UserMixin, db.Model):
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    name = db.Column(
+        db.String(100),
+        nullable=False
+    )
+
+    email = db.Column(
+        db.String(120),
+        unique=True,
+        nullable=False
+    )
+
+    password = db.Column(
+        db.String(255),
+        nullable=False
+    )
+
+    investigations = db.relationship(
+        "Investigation",
+        backref="user",
+        lazy=True
+    )
+
+
+class Investigation(db.Model):
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+
+    filename = db.Column(
+        db.String(200)
+    )
+
+    score = db.Column(
+        db.Integer
+    )
+
+    risk = db.Column(
+        db.String(20)
+    )
+
+    report = db.Column(
+        db.String(300)
+    )
+
+    created = db.Column(
+        db.DateTime
+    )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("user.id")
+    )

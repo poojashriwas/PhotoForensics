@@ -53,3 +53,29 @@ font-size:18px;
 border-radius:12px;
 
 }
+
+/* ===============================
+   Investigation Timeline
+================================= */
+
+.timeline-step{
+
+    text-align:center;
+
+    width:110px;
+
+}
+
+.timeline-step i{
+
+    font-size:34px;
+
+}
+
+.timeline-step h6{
+
+    margin-top:10px;
+
+    font-weight:bold;
+
+}

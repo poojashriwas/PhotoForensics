@@ -15,82 +15,340 @@
 href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
-
 <body>
 
 <div class="container py-5">
 
-<div class="text-center mb-5">
+    <div class="text-center mb-5">
 
-<h1 class="fw-bold text-info">
+        <h1 class="fw-bold text-info">
+            🔒 Photo Forensics Investigation Report
+        </h1>
 
-🔒 Photo Forensics Investigation Report
+        <p class="text-light">
+            Digital Image Investigation Dashboard
+        </p>
 
-</h1>
-
-<p class="text-light">
-
-Digital Image Investigation Dashboard
-
-</p>
-
-</div>
-
-<div class="card shadow-lg mb-5">
-
-<div class="card-header bg-primary text-white">
-
-Uploaded Image
-
-</div>
-
-<div class="card-body text-center">
-
-<img
-
-src="{{ url_for('static', filename='uploads/' + filename) }}"
-
-class="img-fluid rounded"
-
-style="max-height:500px;">
-
-</div>
-
-</div>
-
-<div class="row">
-
-<div class="col-lg-6 mb-4">
-
-<div class="card shadow h-100">
+    </div>
+    <div class="card shadow-lg mb-4 border-0">
 
 <div class="card-header bg-dark text-white">
 
-📄 File Information
+        🛡 Overall Investigation Summary
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row text-center">
+
+            <div class="col-md-3">
+
+                <h2>
+
+                    <span class="badge bg-{{ summary.color }}">
+
+                        {{ summary.risk }}
+
+                    </span>
+
+                </h2>
+
+                <p class="fw-bold">
+
+                    Overall Risk
+
+                </p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h2>
+
+                    {{ summary.score }}/100
+
+                </h2>
+
+                <p class="fw-bold">
+
+                    Investigation Score
+
+                </p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h2>
+
+                    {{ summary.confidence }}%
+
+                </h2>
+
+                <p class="fw-bold">
+
+                    Confidence
+
+                </p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h6>
+
+                    {{ summary.report_id }}
+
+                </h6>
+
+                <p class="fw-bold">
+
+                    Report ID
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <!-- Score Progress -->
+
+        <h6>
+
+           <!-- Investigation Completion -->
+
+<h6 class="fw-bold">
+    Investigation Completion
+</h6>
+
+<div class="progress mb-4" 
+style="height:25px;">
+
+    <div
+        class="progress-bar progress-bar-striped progress-bar-animated bg-{{ summary.color }}"
+        role="progressbar"
+        style="width: 
+        {{ summary.score }}%;"
+        aria-valuenow="{{ summary.score }}"
+        aria-valuemin="0"
+        aria-valuemax="100">
+
+        {{ summary.score }}%
+
+    </div>
 
 </div>
 
-<div class="card-body">
+<!-- Confidence Level -->
 
-<table class="table table-striped">
+<h6 class="fw-bold">
+    Confidence Level
+</h6>
 
-<tbody>
+<div class="progress mb-4" style="height:20px;">
 
-{% for key,value in file_info.items() %}
+    <div
+        class="progress-bar bg-info progress-bar-striped"
+        role="progressbar"
+        style="width: {{ summary.confidence }}%;"
+        aria-valuenow="{{ summary.confidence }}"
+        aria-valuemin="0"
+        aria-valuemax="100">
 
-<tr>
+        {{ summary.confidence }}%
 
-<th>{{ key }}</th>
+    </div>
 
-<td>{{ value }}</td>
+</div>
 
-</tr>
+        <!-- Processing -->
 
-{% endfor %}
+        <div class="row mb-4">
 
-</tbody>
+            <div class="col-md-6">
 
-</table>
+                <strong>Processing Time</strong>
+
+                <br>
+
+                ⏱ {{ processing_time }} sec
+
+            </div>
+
+            <div class="col-md-6">
+
+                <strong>Status</strong>
+
+                <br>
+
+                <span class="badge bg-success">
+
+                    Investigation Completed
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <h5>
+
+            Investigation Findings
+
+        </h5>
+
+        <div class="list-group mb-4">
+
+            {% for item in summary.reasons %}
+
+            <div class="list-group-item">
+
+                ✅ {{ item }}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="alert alert-warning">
+
+            <h5>
+
+                📝 Investigator Recommendation
+
+            </h5>
+
+            <hr>
+
+            This investigation is based on automated forensic analysis including
+            metadata inspection, hash verification, GPS extraction, Error Level
+            Analysis, image quality assessment and histogram analysis.
+
+            <br><br>
+
+            <strong>
+
+                Manual expert verification is recommended before using this
+                report as legal or evidential material.
+
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Investigation Timeline -->
+
+<div class="card shadow mb-4">
+
+    <div class="card-header bg-primary text-white">
+
+        📋 Investigation Timeline
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+
+            <div class="text-center">
+                📷
+                <br>
+                Upload
+            </div>
+
+            ➜
+
+            <div class="text-center">
+                📄
+                <br>
+                Metadata
+            </div>
+
+            ➜
+
+            <div class="text-center">
+                🔐
+                <br>
+                Hash
+            </div>
+
+            ➜
+
+            <div class="text-center">
+                📍
+                <br>
+                GPS
+            </div>
+
+            ➜
+
+            <div class="text-center">
+                🧪
+                <br>
+                ELA
+            </div>
+
+            ➜
+
+            <div class="text-center">
+                📊
+                <br>
+                Histogram
+            </div>
+
+            ➜
+
+            <div class="text-center">
+                📉
+                <br>
+                Noise
+            </div>
+
+            ➜
+
+            <div class="text-center">
+                ✅
+                <br>
+                Completed
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Dashboard Cards -->
+
+<div class="row mb-4">
+
+<div class="col-md-3">
+
+<div class="card shadow border-success">
+
+<div class="card-body text-center">
+
+<h1>🛡</h1>
+
+<h3>{{ summary.score }}%</h3>
+
+<h6>Investigation Score</h6>
+
+<div class="progress">
+
+<div
+class="progress-bar bg-success"
+
+style="width:{{ summary.score }}%;">
 
 </div>
 
@@ -98,57 +356,28 @@ style="max-height:500px;">
 
 </div>
 
-<div class="col-lg-6 mb-4">
-
-<div class="card shadow h-100">
-
-<div class="card-header bg-success text-white">
-
-📷 EXIF Metadata
+</div>
 
 </div>
 
-<div class="card-body">
+<div class="col-md-3">
 
-<table class="table table-striped">
+<div class="card shadow border-primary">
 
-<tbody>
+<div class="card-body text-center">
 
-{% for key,value in metadata.items() %}
+<h1>📊</h1>
 
-<tr>
+<h3>{{ summary.confidence }}%</h3>
 
-<th>{{ key }}</th>
+<h6>Confidence</h6>
 
-<td>
+<div class="progress">
 
-{% if value=="Not Available" %}
+<div
+class="progress-bar bg-primary"
 
-<span class="text-danger">
-
-Not Available
-
-</span>
-
-{% else %}
-
-<span class="text-success">
-
-{{ value }}
-
-</span>
-
-{% endif %}
-
-</td>
-
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
+style="width:{{ summary.confidence }}%;">
 
 </div>
 
@@ -158,170 +387,862 @@ Not Available
 
 </div>
 
-<div class="row">
-
-<div class="col-lg-6 mb-4">
-
-<div class="card shadow">
-
-<div class="card-header bg-warning">
-
-🔐 Hash Information
-
 </div>
 
-<div class="card-body">
+<div class="col-md-3">
 
-<table class="table table-striped">
+<div class="card shadow border-warning">
 
-<tbody>
+<div class="card-body text-center">
 
-{% for key, value in hash_info.items() %}
+<h1>📷</h1>
 
-<tr>
+<h3>{{ summary.metadata_score }}%</h3>
 
-<th>{{ key }}</th>
+<h6>Metadata</h6>
 
-<td style="word-break:break-all;">
+<div class="progress">
 
-{% if key == "Integrity Status" %}
+<div
+class="progress-bar bg-warning"
 
-<span class="text-success fw-bold">
-{{ value }}
-</span>
+style="width:{{ summary.metadata_score }}%;">
 
-{% else %}
-
-<code>{{ value }}</code>
-
-{% endif %}
-
-</td>
-
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
 </div>
 
 </div>
 
 </div>
 
-<div class="col-lg-6 mb-4">
-
-<div class="card shadow">
-
-<div class="card-header bg-info text-white">
-
-📍 GPS Information
+</div>
 
 </div>
 
-<div class="card-body">
+<div class="col-md-3">
 
-<table class="table table-striped">
+<div class="card shadow border-info">
 
-<tbody>
+<div class="card-body text-center">
 
-{% for key, value in gps_info.items() %}
+<h1>🔐</h1>
 
-<tr>
+<h3>{{ summary.integrity }}%</h3>
 
-<th>{{ key }}</th>
+<h6>Integrity</h6>
 
-<td>
+<div class="progress">
 
-{% if key == "Status" %}
+<div
+class="progress-bar bg-info"
 
-    {% if value == "GPS Coordinates Found" %}
-
-        <span class="text-success fw-bold">
-            {{ value }}
-        </span>
-
-    {% else %}
-
-        <span class="text-danger fw-bold">
-            {{ value }}
-        </span>
-
-    {% endif %}
-
-{% else %}
-
-    {{ value }}
-
-{% endif %}
-
-</td>
-
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
-
-{% if google_maps_url %}
-
-<div class="text-center mt-3">
-
-<a href="{{ google_maps_url }}"
-   target="_blank"
-   class="btn btn-success">
-
-🌍 Open in Google Maps
-
-</a>
-
-</div>
-
-{% endif %}
+style="width:100%;">
 
 </div>
 
 </div>
 
 </div>
+
+</div>
+
+</div>
+
+</div>
+
+    <!-- Uploaded Image -->
+
+    <div class="card shadow-lg mb-5">
+
+        <div class="card-header bg-primary text-white">
+
+            Uploaded Image
+
+        </div>
+
+        <div class="card-body text-center">
+
+            <img
+                src="{{ url_for('static', filename='uploads/' + filename) }}"
+                class="img-fluid rounded"
+                style="max-height:500px;">
+
+        </div>
+
+    </div>
+
+    <!-- File + EXIF -->
+
+    <div class="row">
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-header bg-dark text-white">
+
+                    📄 File Information
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-striped">
+
+                        <tbody>
+
+                        {% for key,value in file_info.items() %}
+
+                            <tr>
+
+                                <th>{{ key }}</th>
+
+                                <td>{{ value }}</td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-header bg-success text-white">
+
+                    📷 EXIF Metadata
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-striped">
+
+                        <tbody>
+
+                        {% for key,value in metadata.items() %}
+
+                            <tr>
+
+                                <th>{{ key }}</th>
+
+                                <td>
+
+                                    {% if value=="Not Available" %}
+
+                                        <span class="text-danger">
+
+                                            Not Available
+
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="text-success">
+
+                                            {{ value }}
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Hash + GPS -->
+
+    <div class="row">
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-warning">
+
+                    🔐 Hash Information
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-striped">
+
+                        <tbody>
+
+                        {% for key,value in hash_info.items() %}
+
+                            <tr>
+
+                                <th>{{ key }}</th>
+
+                                <td style="word-break:break-all;">
+
+                                    {% if key=="Integrity Status" %}
+
+                                        <span class="text-success fw-bold">
+
+                                            {{ value }}
+
+                                        </span>
+
+                                    {% else %}
+
+                                        <code>
+
+                                            {{ value }}
+
+                                        </code>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-info text-white">
+
+                    📍 GPS Information
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-striped">
+
+                        <tbody>
+
+                        {% for key,value in gps_info.items() %}
+
+                            <tr>
+
+                                <th>{{ key }}</th>
+
+                                <td>
+
+                                    {% if key=="Status" %}
+
+                                        {% if value=="GPS Coordinates Found" %}
+
+                                            <span class="text-success fw-bold">
+
+                                                {{ value }}
+
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="text-danger fw-bold">
+
+                                                {{ value }}
+
+                                            </span>
+
+                                        {% endif %}
+
+                                    {% else %}
+
+                                        {{ value }}
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                    {% if google_maps_url %}
+
+                    <div class="text-center mt-3">
+
+                        <a href="{{ google_maps_url }}"
+                           target="_blank"
+                           class="btn btn-success">
+
+                            🌍 Open in Google Maps
+
+                        </a>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ELA -->
+
+    <div class="card shadow mb-5">
+
+        <div class="card-header bg-danger text-white">
+
+            🧪 Error Level Analysis
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6 text-center">
+
+                    <h5>Original Image</h5>
+
+                    <img
+                        src="{{ url_for('static', filename='uploads/' + filename) }}"
+                        class="img-fluid rounded shadow">
+
+                </div>
+
+                <div class="col-md-6 text-center">
+
+                    <h5>ELA Image</h5>
+
+                    <img
+                        src="/{{ ela_result.ela_image }}"
+                        class="img-fluid rounded shadow">
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <h5>
+
+                ELA Score :
+                <strong>{{ ela_result.ela_score }}</strong>
+
+            </h5>
+
+            <h4>
+
+                Risk Level :
+
+                <span class="badge bg-{{ ela_result.color }}">
+
+                    {{ ela_result.risk }}
+
+                </span>
+
+            </h4>
+
+            <p class="mt-3">
+
+                <strong>Explanation</strong>
+
+                <br><br>
+
+                Error Level Analysis compares the uploaded image with a recompressed version.
+
+                Bright areas indicate higher compression differences.
+
+                This is one forensic indicator and should always be combined with
+
+                EXIF metadata, hash verification and manual inspection.
+
+            </p>
+
+        </div>
+
+    </div>
+
+     
+
+<div class="card shadow mb-5">
+
+    <div class="card-header bg-primary text-white">
+
+        📊 Image Quality Analysis
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-striped">
+
+            <tbody>
+
+                <tr>
+                    <th>Resolution</th>
+                    <td>{{ quality_info.resolution }}</td>
+                </tr>
+
+                <tr>
+                    <th>Blur Score</th>
+                    <td>{{ quality_info.blur_score }}</td>
+                </tr>
+
+                <tr>
+                    <th>Image Sharpness</th>
+                    <td>
+                        <span class="badge bg-info">
+                            {{ quality_info.blur }}
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Brightness</th>
+                    <td>
+                        {{ quality_info.brightness }}
+                        ({{ quality_info.brightness_status }})
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Contrast</th>
+                    <td>
+                        {{ quality_info.contrast }}
+                        ({{ quality_info.contrast_status }})
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 </div>
 
 <div class="card shadow mb-5">
 
-<div class="card-header bg-danger text-white">
+    <div class="card-header bg-success text-white">
 
-🧪 Error Level Analysis
+        📊 RGB Histogram Analysis
 
-</div>
+    </div>
 
-<div class="card-body">
+    <div class="card-body text-center">
 
-<p class="text-muted">
+        <img
+           src="/{{ histogram_info.histogram_image }}"
+           class="img-fluid rounded shadow">
+        <hr>
 
-Coming Soon...
+     <div class="row mt-4">
+
+    <div class="col-md-6">
+
+        <table class="table table-bordered">
+<tr>
+
+<th>Dominant Color</th>
+
+<td>
+
+{% if histogram_info.dominant_color == "Red" %}
+
+<span class="badge bg-danger">
+    🔴 Red
+</span>
+
+{% elif histogram_info.dominant_color == "Green" %}
+
+<span class="badge bg-success">
+    🟢 Green
+</span>
+
+{% else %}
+
+<span class="badge bg-primary">
+    🔵 Blue
+</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>Brightness</th>
+
+<td>
+
+{% if histogram_info.brightness_level == "Dark" %}
+
+<span class="badge bg-dark">
+    🌑 Dark
+</span>
+
+{% elif histogram_info.brightness_level == "Bright" %}
+
+<span class="badge bg-warning text-dark">
+    ☀️ Bright
+</span>
+
+{% else %}
+
+<span class="badge bg-success">
+    🌤 Normal
+</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>Contrast</th>
+
+<td>
+
+{% if histogram_info.contrast_level == "High" %}
+
+<span class="badge bg-danger">
+    High
+</span>
+
+{% elif histogram_info.contrast_level == "Low" %}
+
+<span class="badge bg-secondary">
+    Low
+</span>
+
+{% else %}
+
+<span class="badge bg-primary">
+    Normal
+</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+<tr>
+<th>Mean Intensity</th>
+
+<td>
+
+{{ histogram_info.mean_intensity }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>Dynamic Range</th>
+
+<td>
+
+{% if histogram_info.dynamic_range == "Wide" %}
+
+<span class="badge bg-success">
+Wide
+</span>
+
+{% elif histogram_info.dynamic_range == "Medium" %}
+
+<span class="badge bg-warning text-dark">
+Medium
+</span>
+
+{% else %}
+
+<span class="badge bg-danger">
+Narrow
+</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+</table>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="alert alert-info shadow-lg">
+
+<h5>
+
+🔎 Forensic Interpretation
+
+</h5>
+
+<hr>
+
+<p>
+
+{{ histogram_info.interpretation }}
 
 </p>
 
-</div>
+<div class="alert alert-light border mt-3">
+
+<strong>Recommendation</strong>
+
+<hr>
+
+Always correlate histogram findings with:
+
+<ul class="mb-0">
+
+<li>✔ EXIF Metadata</li>
+
+<li>✔ Hash Verification</li>
+
+<li>✔ GPS Information</li>
+
+<li>✔ Error Level Analysis</li>
+
+<li>✔ Image Quality Metrics</li>
+
+<li>✔ Noise Analysis</li>
+
+</ul>
 
 </div>
 
-<div class="text-center">
+</div>
+</div>
 
-<a href="/"
+<div class="card shadow mb-5">
 
-class="btn btn-primary btn-lg">
+    <div class="card-header bg-secondary text-white">
 
-Upload Another Image
+        📉 Noise Analysis
 
-</a>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-6 text-center">
+
+                <img
+                    src="/{{ noise_info.noise_image }}"
+                    class="img-fluid rounded shadow">
+
+            </div>
+
+            <div class="col-md-6">
+
+                <table class="table table-striped">
+
+                    <tr>
+
+                        <th>Noise Score</th>
+
+                        <td>{{ noise_info.noise_score }}</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>Noise Risk</th>
+
+                        <td>
+
+                            <span class="badge bg-{{ noise_info.color }}">
+
+                                {{ noise_info.risk }}
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+                <div class="alert alert-info">
+
+                    <strong>Explanation</strong>
+
+                    <hr>
+
+                    Noise analysis examines inconsistencies in the image's texture
+                    and sensor noise. Sudden changes in noise patterns may
+                    indicate edited or manipulated regions.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
+
+<!-- ========================= -->
+<!-- AI Investigation Summary -->
+<!-- ========================= -->
+
+<div class="card shadow mb-5">
+
+    <div class="card-header bg-dark text-white">
+
+        🧠 AI Investigation Summary
+
+    </div>
+
+    <div class="card-body">
+
+        <h5 class="text-primary">
+
+            Automated Investigation Findings
+
+        </h5>
+
+        <hr>
+
+        <ul class="list-group mb-4">
+
+            {% for item in ai_summary.findings %}
+
+            <li class="list-group-item">
+
+                {{ item }}
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+        <div class="alert alert-warning">
+
+            <h5>
+
+                📌 Recommendation
+
+            </h5>
+
+            <hr>
+
+            {{ ai_summary.recommendation }}
+
+        </div>
+
+        <div class="row text-center">
+
+            <div class="col-md-6">
+
+                <h5>
+
+                    Overall Risk
+
+                </h5>
+
+                <span class="badge bg-{{ summary.color }} fs-5">
+
+                    {{ ai_summary.risk }}
+
+                </span>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <h5>
+
+                    Confidence
+
+                </h5>
+
+                <span class="badge bg-primary fs-5">
+
+                    {{ ai_summary.confidence }}%
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="text-center mt-4">
+
+    <a
+        href="/{{ pdf_report }}"
+        class="btn btn-danger btn-lg"
+        target="_blank">
+
+        📄 Download Investigation Report
+
+    </a>
+
+</div>
+
+
+
+    <!-- Upload Again -->
+
+    <div class="text-center">
+
+        <a href="/"
+           class="btn btn-primary btn-lg">
+
+            Upload Another Image
+
+        </a>
+
+    </div>
 
 </div>
 
