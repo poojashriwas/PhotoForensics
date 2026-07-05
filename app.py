@@ -24,6 +24,10 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route("/")
 def home():
+    return render_template("login.html")
+
+@app.route("/dashboard")
+def dashboard():
     return render_template("index.html")
 
 
@@ -84,11 +88,21 @@ def upload():
     quality_info,
     histogram_info
 )
+    
+    ai_summary = generate_ai_summary(
+    metadata,
+    gps_info,
+    ela_result,
+    quality_info,
+    histogram_info,
+    noise_info,
+    summary
+)
     pdf_report = generate_pdf_report(
 
     summary,
 
-    image_path,
+    filepath,
 
     file_info,
 
@@ -110,15 +124,7 @@ def upload():
 
 )
     
-    ai_summary = generate_ai_summary(
-    metadata,
-    gps_info,
-    ela_result,
-    quality_info,
-    histogram_info,
-    noise_info,
-    summary
-)
+   
     
     processing_time = round(time.time() - start_time, 2)
 
