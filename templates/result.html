@@ -16,7 +16,395 @@ href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
 <body>
+<!-- ======================================
+        PROFESSIONAL RESULT HEADER
+====================================== -->
 
+<div class="container-fluid py-4">
+
+<div class="hero-section">
+
+<div class="row align-items-center">
+
+<div class="col-lg-8">
+
+<span class="badge bg-success fs-6 mb-3">
+
+✔ Investigation Completed Successfully
+
+</span>
+
+<h1 class="display-5 fw-bold">
+
+Photo Forensics Investigation Report
+
+</h1>
+
+<p class="text-light">
+
+Advanced AI Powered Digital Evidence Analysis
+
+</p>
+
+<div class="mt-4">
+
+<a href="/dashboard" class="btn btn-primary">
+
+<i class="bi bi-speedometer2"></i>
+
+Dashboard
+
+</a>
+
+<a href="/new" class="btn btn-outline-light ms-2">
+
+<i class="bi bi-plus-circle"></i>
+
+New Investigation
+
+</a>
+
+</div>
+
+</div>
+
+<div class="col-lg-4 text-center">
+
+<div class="risk-circle">
+
+{{ score if score else "87" }}%
+
+</div>
+
+<h5 class="mt-3">
+
+Overall Risk Score
+
+</h5>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= SUMMARY ================= -->
+
+<div class="row mt-4">
+
+<div class="col-md-3">
+
+<div class="summary-card">
+
+<i class="bi bi-folder-fill"></i>
+
+<h3>
+
+{{ case_id if case_id else "CASE-001" }}
+
+</h3>
+
+<p>
+
+Case ID
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="summary-card">
+
+<i class="bi bi-shield-check"></i>
+
+<h3>
+
+{{ risk if risk else "LOW" }}
+
+</h3>
+
+<p>
+
+Risk Level
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="summary-card">
+
+<i class="bi bi-calendar-event-fill"></i>
+
+<h3>
+
+{{ created_at if created_at else "Today" }}
+
+</h3>
+
+<p>
+
+Investigation Date
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="summary-card">
+
+<i class="bi bi-person-fill"></i>
+
+<h3>
+
+{{ current_user.name }}
+
+</h3>
+
+<p>
+
+Investigator
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= STATUS ================= -->
+
+<div class="row mt-4 mb-5">
+
+<div class="col-md-3">
+
+<div class="status-card">
+
+<div class="status-icon bg-success">
+
+✔
+
+</div>
+
+<h5>
+
+Metadata
+
+</h5>
+
+<p>
+
+Completed
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="status-card">
+
+<div class="status-icon bg-success">
+
+✔
+
+</div>
+
+<h5>
+
+GPS
+
+</h5>
+
+<p>
+
+Completed
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="status-card">
+
+<div class="status-icon bg-success">
+
+✔
+
+</div>
+
+<h5>
+
+Hash
+
+</h5>
+
+<p>
+
+Completed
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="status-card">
+
+<div class="status-icon bg-success">
+
+✔
+
+</div>
+
+<h5>
+
+AI Summary
+
+</h5>
+
+<p>
+
+Completed
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= EVIDENCE GALLERY ================= -->
+
+<div class="row mt-5">
+
+    <div class="col-12">
+
+        <h3 class="text-white mb-4">
+
+            <i class="bi bi-images"></i>
+
+            Digital Evidence Gallery
+
+        </h3>
+
+    </div>
+
+    <!-- Original Image -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="evidence-card">
+
+            <div class="card-header-custom">
+
+                📷 Original Evidence
+
+            </div>
+
+            <div class="card-body text-center">
+
+                <img src="{{ image_path }}"
+                     class="evidence-img img-fluid">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ELA -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="evidence-card">
+
+            <div class="card-header-custom">
+
+                🧪 Error Level Analysis (ELA)
+
+            </div>
+
+            <div class="card-body text-center">
+
+                <img src="{{ ela_image }}"
+                     class="evidence-img img-fluid">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="row">
+
+    <!-- Histogram -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="evidence-card">
+
+            <div class="card-header-custom">
+
+                📊 RGB Histogram
+
+            </div>
+
+            <div class="card-body text-center">
+
+                <img src="{{ histogram_image }}"
+                     class="evidence-img img-fluid">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Noise -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="evidence-card">
+
+            <div class="card-header-custom">
+
+                🌊 Noise Analysis
+
+            </div>
+
+            <div class="card-body text-center">
+
+                <img src="{{ noise_image }}"
+                     class="evidence-img img-fluid">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 <div class="container py-5">
 
     <div class="text-center mb-5">

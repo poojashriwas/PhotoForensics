@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Generated Reports</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+
+body{
+    background:#0f172a;
+    font-family:'Segoe UI',sans-serif;
+    color:white;
+}
+
+.container{
+    max-width:1400px;
+    margin-top:40px;
+}
+
+.hero{
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    padding:35px;
+    border-radius:20px;
+    margin-bottom:30px;
+}
+
+.hero h2{
+    font-weight:700;
+}
+
+.hero p{
+    color:#dbeafe;
+    margin-bottom:0;
+}
+
+.stat-card{
+    border:none;
+    border-radius:18px;
+    color:white;
+    padding:25px;
+    transition:.3s;
+}
+
+.stat-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 35px rgba(0,0,0,.35);
+}
+
+.table-card{
+    background:#1e293b;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:30px;
+}
+
+.table-dark{
+    margin-bottom:0;
+}
+
+.table-dark th{
+    background:#111827;
+    color:white;
+}
+
+.table-dark td{
+    vertical-align:middle;
+}
+
+.badge{
+    font-size:13px;
+    padding:8px 12px;
+}
+
+.download-btn{
+    border-radius:10px;
+}
+
+.footer-buttons{
+    margin-top:25px;
+    display:flex;
+    gap:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Hero -->
+
+    <div class="hero d-flex justify-content-between align-items-center">
+
+        <div>
+
+            <h2>
+                <i class="bi bi-file-earmark-pdf-fill"></i>
+                Generated Reports
+            </h2>
+
+            <p>
+                View and download all forensic investigation reports.
+            </p>
+
+        </div>
+
+        <div>
+
+            <a href="/dashboard" class="btn btn-light">
+                <i class="bi bi-speedometer2"></i>
+                Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- Statistics -->
+
+    <div class="row g-4">
+
+        <div class="col-md-3">
+
+            <div class="stat-card bg-primary text-center">
+
+                <i class="bi bi-file-earmark-text display-5"></i>
+
+                <h2 class="mt-3">{{ total_reports }}</h2>
+
+                <p>Total Reports</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stat-card bg-success text-center">
+
+                <i class="bi bi-download display-5"></i>
+
+                <h2 class="mt-3">{{ downloaded }}</h2>
+
+                <p>Downloaded</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stat-card bg-warning text-dark text-center">
+
+                <i class="bi bi-bar-chart-fill display-5"></i>
+
+                <h2 class="mt-3">{{ avg_score }}%</h2>
+
+                <p>Average Score</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stat-card bg-danger text-center">
+
+                <i class="bi bi-shield-fill-exclamation display-5"></i>
+
+                <h2 class="mt-3">{{ high_risk }}</h2>
+
+                <p>High Risk</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Reports Table -->
+
+    <div class="table-card">
+
+        <table class="table table-dark table-hover align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>Case ID</th>
+
+                    <th>Image</th>
+
+                    <th>Risk</th>
+
+                    <th>Score</th>
+
+                    <th>Date</th>
+
+                    <th>Download</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for report in reports %}
+
+                <tr>
+
+                    <td>{{ report.case_id }}</td>
+
+                    <td>{{ report.image_name }}</td>
+
+                    <td>
+
+                        {% if report.risk=="HIGH" %}
+
+                            <span class="badge bg-danger">HIGH</span>
+
+                        {% elif report.risk=="MEDIUM" %}
+
+                            <span class="badge bg-warning text-dark">MEDIUM</span>
+
+                        {% else %}
+
+                            <span class="badge bg-success">LOW</span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>{{ report.score }}%</td>
+
+                    <td>{{ report.created_at.strftime("%d %b %Y") }}</td>
+
+                    <td>
+
+                        <a
+                        href="/static/reports/{{ report.pdf_report }}"
+                        download
+                        class="btn btn-success btn-sm download-btn">
+
+                            <i class="bi bi-download"></i>
+                            PDF
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- Footer -->
+
+    <div class="footer-buttons">
+
+        <a href="/dashboard" class="btn btn-primary">
+
+            <i class="bi bi-arrow-left"></i>
+
+            Dashboard
+
+        </a>
+
+        <a href="/new" class="btn btn-outline-light">
+
+            <i class="bi bi-plus-circle"></i>
+
+            New Investigation
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

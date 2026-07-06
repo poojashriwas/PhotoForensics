@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Dashboard</title>
+
+<link
+rel="stylesheet"
+href="{{ url_for('static',filename='css/dashboard.css') }}">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+body{
+    background:#0f172a;
+    margin:0;
+    font-family:Segoe UI;
+}
+
+.sidebar{
+
+position:fixed;
+
+left:0;
+
+top:0;
+
+width:250px;
+
+height:100vh;
+
+background:#111827;
+
+padding:30px 20px;
+
+}
+
+.logo{
+
+color:white;
+
+margin-bottom:35px;
+
+}
+
+.sidebar a{
+
+display:block;
+
+padding:14px;
+
+margin-bottom:12px;
+
+text-decoration:none;
+
+color:#cbd5e1;
+
+border-radius:10px;
+
+transition:.3s;
+
+font-size:17px;
+
+}
+
+.sidebar a:hover{
+
+background:#2563eb;
+
+color:white;
+
+}
+
+.logout{
+
+background:#dc3545;
+
+color:white !important;
+
+}
+
+.main-content{
+
+margin-left:270px;
+
+padding:40px;
+
+}
+
+.card{
+
+border:none;
+
+border-radius:18px;
+
+transition:.3s;
+
+}
+
+.card:hover{
+
+transform:translateY(-6px);
+
+box-shadow:0 15px 35px rgba(0,0,0,.35);
+
+}
+</style>
+
+</head>
+
+<body>
+
+<body>
+
+<div class="sidebar">
+
+    <h3 class="logo">
+        🛡 Photo Forensics
+    </h3>
+
+    <a href="/dashboard">
+        <i class="bi bi-grid"></i>
+        Dashboard
+    </a>
+
+<a href="/new">
+    <i class="bi bi-plus-circle"></i>
+    New Investigation
+</a>
+    <a href="/history">
+        <i class="bi bi-clock-history"></i>
+        History
+    </a>
+
+    <a href="/reports">
+        <i class="bi bi-file-earmark-text"></i>
+        Reports
+    </a>
+
+    <a href="/profile">
+        <i class="bi bi-person-circle"></i>
+        Profile
+    </a>
+
+    <a href="/settings">
+        <i class="bi bi-gear"></i>
+        Settings
+    </a>
+
+    <a href="/logout" class="logout">
+        <i class="bi bi-box-arrow-right"></i>
+        Logout
+    </a>
+
+</div>
+
+
+<div class="main-content">
+
+<!-- ================= HEADER ================= -->
+
+<div class="top-header">
+
+    <div>
+
+    
+
+    </div>
+
+    <div class="header-right">
+
+        <!-- Search -->
+
+        <div class="search-box">
+
+            <i class="bi bi-search"></i>
+
+           <form action="/search" method="GET">
+             <input
+                 type="text"
+                 name="q"
+                 placeholder="Search Investigation..."
+                 class="form-control">
+            </form>
+
+        </div>
+
+        <!-- Notification -->
+
+        <button class="icon-btn">
+
+            <i class="bi bi-bell-fill"></i>
+
+        </button>
+
+        <!-- User -->
+
+        <div class="user-box">
+
+            <div class="avatar">
+
+               <a href="/profile" class="profile-btn">
+                {{ current_user.name[0] }}
+                </a>
+
+            </div>
+
+            <div>
+
+                <strong>
+
+                    {{ current_user.name }}
+
+                </strong>
+
+                <br>
+
+                <small>
+
+                    Digital Investigator
+
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Hero Banner -->
+
+<div class="hero-banner">
+
+    <div class="hero-left">
+
+        <span class="badge bg-info mb-3">
+
+            DIGITAL FORENSICS PLATFORM
+
+        </span>
+
+        <h1>
+
+            Welcome back,
+
+            {{ current_user.name }}
+
+            👋
+
+        </h1>
+
+        <p>
+
+            Analyze digital evidence, detect image manipulation,
+            verify metadata, investigate GPS location,
+            generate AI-powered forensic reports,
+            and manage investigations from one secure dashboard.
+
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="/new" class="btn btn-primary btn-lg">
+
+                <i class="bi bi-plus-circle"></i>
+
+                Start Investigation
+
+            </a>
+
+            <a href="/history" class="btn btn-outline-light btn-lg">
+
+                <i class="bi bi-clock-history"></i>
+
+                View History
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-right">
+
+        <i class="bi bi-shield-lock-fill hero-icon"></i>
+
+    </div>
+
+</div>
+
+<div class="row mt-4">
+
+<div class="col-md-3">
+
+<div class="card stat-card bg-primary text-white">
+
+<div class="d-flex justify-content-between align-items-center">
+
+<div>
+
+<h2>{{ total_cases }}</h2>
+
+<p class="mb-0">
+Total Investigations
+</p>
+
+</div>
+
+<div class="display-4">
+
+<i class="bi bi-folder-fill"></i>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card bg-danger text-white text-center p-4">
+    
+    <i class="bi bi-shield-fill-exclamation"></i>
+
+<h2>
+
+{{ high_risk }}
+
+</h2>
+
+<p>
+
+High Risk
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card bg-success text-white text-center p-4">
+<i class="bi bi-bar-chart-fill"></i>
+<h2>
+
+{{ avg_score }}%
+
+</h2>
+
+<p>
+
+Average Score
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card bg-warning text-dark text-center p-4">
+<i class="bi bi-calendar-check-fill"></i>
+<h2>
+
+{{ today_cases }}
+
+</h2>
+
+<p>
+
+Today's Cases
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="row mt-5">
+
+<div class="col-md-4">
+
+<div class="card p-4 text-center">
+<div class="display-2 text-primary mb-3">
+
+<i class="bi bi-images"></i>
+
+</div>
+
+<h4>
+
+New Investigation
+
+</h4>
+
+<p>
+
+Analyze a new digital image.
+
+</p>
+
+<a href="/new"
+
+class="btn btn-primary">
+
+Start
+
+</a>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card p-4 text-center">
+
+<div class="display-2 text-success mb-3">
+
+<i class="bi bi-clock-history"></i>
+
+</div>
+
+<h4>
+
+History
+
+</h4>
+
+<p>
+
+View previous investigations.
+
+</p>
+
+<a href="/history"
+
+class="btn btn-success">
+
+Open
+
+</a>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card p-4 text-center">
+
+<div class="display-2 text-warning mb-3">
+
+<i class="bi bi-person-circle"></i>
+
+</div>
+
+<h4>
+
+Profile
+
+</h4>
+
+<p>
+
+Manage account.
+
+</p>
+
+<a href="/profile"
+
+class="btn btn-warning">
+
+Profile
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="mt-5">
+
+    <div class="card shadow-lg border-0">
+
+        <div class="card-header bg-dark text-white">
+
+            📁 Recent Investigations
+
+        </div>
+
+        <div class="card-body p-0">
+
+            <table class="table table-hover mb-0">
+
+                <thead class="table-primary">
+
+                    <tr>
+
+                        <th>Case ID</th>
+
+                        <th>Image</th>
+
+                        <th>Risk</th>
+
+                        <th>Score</th>
+
+                        <th>Date</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for case in recent_cases %}
+
+                    <tr>
+
+                        <td>{{ case.case_id }}</td>
+
+                        <td>{{ case.image_name }}</td>
+
+                        <td>
+
+                            {% if case.risk=="HIGH" %}
+                                <span class="badge bg-danger">HIGH</span>
+
+                            {% elif case.risk=="MEDIUM" %}
+                                <span class="badge bg-warning text-dark">MEDIUM</span>
+
+                            {% else %}
+                                <span class="badge bg-success">LOW</span>
+                            {% endif %}
+
+                        </td>
+
+                        <td>{{ case.score }}%</td>
+
+                        <td>{{ case.created_at.strftime("%d %b %Y") }}</td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row mt-5">
+
+    <div class="col-lg-6">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-primary text-white">
+
+                📊 Risk Distribution
+
+            </div>
+
+            <div class="card-body">
+
+                <canvas id="riskChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-6">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-success text-white">
+
+                📈 Investigation Overview
+
+            </div>
+
+            <div class="card-body">
+
+                <canvas id="overviewChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const riskChart = new Chart(
+    document.getElementById("riskChart"),
+    {
+        type: "doughnut",
+
+        data: {
+            labels: ["Low", "Medium", "High"],
+
+            datasets: [{
+                data: [
+                    {{ low_cases }},
+                    {{ medium_cases }},
+                    {{ high_cases }}
+                ],
+
+                backgroundColor: [
+                    "#198754",
+                    "#ffc107",
+                    "#dc3545"
+                ]
+            }]
+        }
+    }
+);
+
+const overviewChart = new Chart(
+    document.getElementById("overviewChart"),
+    {
+        type: "bar",
+
+        data: {
+            labels: ["Low", "Medium", "High"],
+
+            datasets: [{
+                label: "Cases",
+
+                data: [
+                    {{ low_cases }},
+                    {{ medium_cases }},
+                    {{ high_cases }}
+                ],
+
+                backgroundColor: [
+                    "#198754",
+                    "#ffc107",
+                    "#dc3545"
+                ]
+            }]
+        }
+    }
+);
+
+</script>
+</div>
+</div>
+</div>
+</body>
+
+</html>

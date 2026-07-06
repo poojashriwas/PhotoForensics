@@ -1,14 +1,13 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from datetime import datetime
 
 db = SQLAlchemy()
 
+
 class User(UserMixin, db.Model):
 
-    id = db.Column(
-        db.Integer,
-        primary_key=True
-    )
+    id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(
         db.String(100),
@@ -26,6 +25,11 @@ class User(UserMixin, db.Model):
         nullable=False
     )
 
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow
+    )
+
     investigations = db.relationship(
         "Investigation",
         backref="user",
@@ -40,24 +44,34 @@ class Investigation(db.Model):
         primary_key=True
     )
 
-    filename = db.Column(
-        db.String(200)
+    case_id = db.Column(
+        db.String(30),
+        unique=True
     )
 
-    score = db.Column(
-        db.Integer
+    filename = db.Column(
+        db.String(255)
     )
 
     risk = db.Column(
         db.String(20)
     )
 
-    report = db.Column(
+    score = db.Column(
+        db.Integer
+    )
+
+    confidence = db.Column(
+        db.Integer
+    )
+
+    report_path = db.Column(
         db.String(300)
     )
 
-    created = db.Column(
-        db.DateTime
+    created_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow
     )
 
     user_id = db.Column(
