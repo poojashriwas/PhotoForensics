@@ -45,8 +45,16 @@ def load_user(user_id):
 UPLOAD_FOLDER = "static/uploads"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
+import os
+
 with app.app_context():
     db.create_all()
+
+    print("=" * 50)
+    print("Database URI:", app.config["SQLALCHEMY_DATABASE_URI"])
+    print("Root DB:", os.path.abspath("database.db"))
+    print("Instance DB:", os.path.join(app.instance_path, "database.db"))
+    print("=" * 50)
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -161,6 +169,7 @@ def register():
 
         db.session.add(new_user)
         db.session.commit()
+        print("Registered User:", new_user.id, new_user.email)
 
         return redirect("/")
 
@@ -173,6 +182,8 @@ def login():
     password = request.form["password"]
 
     user = User.query.filter_by(email=email).first()
+    print("Searching:", email)
+    print("Found:", user.email if user else "No User Found")
 
     if user and bcrypt.check_password_hash(user.password, password):
 
