@@ -1,0 +1,179 @@
+/* ==========================
+   LAYOUT
+========================== */
+
+.container{
+    max-width:1400px;
+}
+
+.content{
+    margin-left:270px;
+    padding:30px;
+}
+
+/* ==========================
+   HERO
+========================== */
+
+.hero{
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    border-radius:25px;
+    padding:50px;
+    color:white;
+    box-shadow:0 20px 40px rgba(0,0,0,.35);
+}
+
+.hero-banner {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    border-radius: 25px;
+    padding: 50px;
+    color: white;
+    box-shadow: 0 20px 40px rgba(0,0,0,.35);
+}
+
+.hero-banner h1,
+.hero-banner p,
+.hero-banner .badge {
+    color: white;
+}
+
+/* ==========================
+   CARD
+========================== */
+
+.card{
+    background:#1e293b;
+    border:none;
+    border-radius:20px;
+    color:white;
+    box-shadow:0 15px 35px rgba(0,0,0,.35);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+}
+
+/* ==========================
+   UPLOAD
+========================== */
+
+.upload-box{
+
+    border:3px dashed #3b82f6;
+
+    background:#111827;
+
+    border-radius:20px;
+
+    min-height:360px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+    transition:.3s;
+
+}
+
+.upload-box:hover{
+
+    background:#172554;
+
+    border-color:#60a5fa;
+
+}
+
+/* ==========================
+   INFO BOX
+========================== */
+
+.info-box{
+
+    background:#111827;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    color:white;
+
+}
+
+/* ==========================
+   MODULE
+========================== */
+
+.module{
+
+    background:#111827;
+
+    border-radius:15px;
+
+    padding:20px;
+
+    text-align:center;
+
+    transition:.3s;
+
+    color:white;
+
+}
+
+.module:hover{
+
+    background:#2563eb;
+
+    transform:translateY(-5px);
+
+}
+
+/* ==========================
+   IMAGE
+========================== */
+
+#preview{
+
+    width:100%;
+
+    height:350px;
+
+    object-fit:contain;
+
+    background:#0f172a;
+
+}
+
+/* ==========================
+   BUTTON
+========================== */
+
+.btn-primary{
+
+    border-radius:12px;
+
+    padding:12px 35px;
+
+}
+
+/* ==========================
+   PROGRESS
+========================== */
+
+.progress{
+
+    background:#1e293b;
+
+    border-radius:20px;
+
+}
+
+.progress-bar{
+
+    font-weight:600;
+
+}
